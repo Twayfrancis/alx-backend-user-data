@@ -12,9 +12,9 @@ def filter_datum(fields, redaction, message, separator):
 
     Args:
     fields (list): A list of strings representing the field names to obfuscate.
-    redaction (str): A string representing the value to replace the field values with.
-    message (str): A string representing the log message.
-    separator (str): A string representing the character that separates fields in the log message.
+    redaction (str): A str repr value to replace the field values with.
+    message (str): A string repr log message.
+    separator (str): A str repr char that separates fields in log message.
 
     Returns:
     str: The log message with the specified fields obfuscated.
@@ -22,6 +22,7 @@ def filter_datum(fields, redaction, message, separator):
     for field in fields:
         message = re.sub(f"{field}=[^;]*", f"{field}={redaction}", message)
     return message
+
 
 class RedactingFormatter(logging.Formatter):
     """Redacting Formatter class"""
@@ -39,6 +40,7 @@ class RedactingFormatter(logging.Formatter):
         for field in self.fields:
             message = re.sub(f"{field}=[^;]*", f"{field}={self.REDACTION}", message)
         return message
+
 
 def get_logger() -> logging.Logger:
     """
