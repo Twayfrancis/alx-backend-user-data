@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Module for logging data with obfuscation of sensitive fields."""
 
+import mysql.connector
+import os
 import re
 import logging
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -58,3 +60,23 @@ def get_logger() -> logging.Logger:
     sh.setFormatter(formatter)
     logger.addHandler(sh)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    Returns a connector to the database.
+
+    database is protected by username and pass that are set as env variables.
+    """
+    username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    db = mysql.connector.connect(
+        host=host,
+        user=username,
+        password=password,
+        database=db_name
+    )
+    return db
