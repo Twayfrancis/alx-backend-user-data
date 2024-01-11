@@ -82,10 +82,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     return db
 
 
-
 def main():
     """
-    Retrieves all rows in the users table and logs each row with obfuscated sensitive fields.
+    Retrieves all rows in users table and logs each row
+    with obfuscated sensitive fields.
     """
     db = get_db()
     cursor = db.cursor()
