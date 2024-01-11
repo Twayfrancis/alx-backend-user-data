@@ -3,7 +3,6 @@
 
 import mysql.connector
 import os
-import bcrypt
 import re
 import logging
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
@@ -82,34 +81,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     )
     return db
 
-
-def hash_password(password: str) -> bytes:
-    """
-    Returns a salted, hashed password, which is a byte string.
-
-    Args:
-    password (str): The password to hash.
-
-    Returns:
-    bytes: The hashed password.
-    """
-    salt = bcrypt.gensalt()
-    hashed = bcrypt.hashpw(password.encode(), salt)
-    return hashed
-
-
-def is_valid(hashed_password: bytes, password: str) -> bool:
-    """
-    Validates that the provided password matches the hashed password.
-
-    Args:
-    hashed_password (bytes): The hashed password.
-    password (str): The password to validate.
-
-    Returns:
-    bool: True if the password is valid, False otherwise.
-    """
-    return bcrypt.checkpw(password.encode(), hashed_password)
 
 
 def main():
