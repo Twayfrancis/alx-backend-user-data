@@ -40,7 +40,8 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         message = super().format(record)
         for field in self.fields:
-            message = re.sub(f"{field}=[^;]*", f"{field}={self.REDACTION}", message)
+            message = re.sub(
+                f"{field}=[^;]*", f"{field}={self.REDACTION}", message)
         return message
 
 
@@ -93,8 +94,10 @@ def main():
     logger = get_logger()
     fields = ["name", "email", "phone", "ssn", "password"]
     for row in cursor:
-        message = "; ".join([f"{field}={value}" for field, value in zip(fields, row)])
-        log_record = logging.LogRecord("user_data", logging.INFO, None, None, message, None, None)
+        message = "; ".join(
+            [f"{field}={value}" for field, value in zip(fields, row)])
+        log_record = logging.LogRecord(
+            "user_data", logging.INFO, None, None, message, None, None)
         print(logger.handle(log_record))
     cursor.close()
     db.close()
