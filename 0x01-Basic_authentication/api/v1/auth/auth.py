@@ -15,8 +15,14 @@ class Auth:
         return False
 
     def authorization_header(self, request=None) -> str:
-        """ Method that returns None for now """
-        return None
+        """ Method that checks if a request contains Authorization header """
+        if request is None:
+            return None
+        
+        if 'Authorization' not in request.headers:
+            return None
+        
+        return request.headers['Authorization']
 
     def current_user(self, request=None) -> User:
         """ Method that returns None for now """
