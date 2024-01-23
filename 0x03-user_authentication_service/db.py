@@ -42,8 +42,11 @@ class DB:
             User: created User object
         """
         # create a new user object
+        if not email or not hashed_password:
+            return
         user = User(email=email, hashed_password=hashed_password)
         # add new user to session and commit it to database
+        session = self._session
         self._session.add(user)
         self._session.commit()
 
